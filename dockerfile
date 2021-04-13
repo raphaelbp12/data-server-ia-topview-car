@@ -9,8 +9,11 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
+
+EXPOSE 4040
+ENV ASPNETCORE_URLS=http://*:4040
+
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "dotnet-core-flicker-project-server.dll"]
