@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Feed.Service;
 
 namespace dotnet_core_flicker_project_server
 {
@@ -19,6 +19,8 @@ namespace dotnet_core_flicker_project_server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<FeedService>();
+            services.AddHttpClient();
             services.AddControllers();
 
             services.AddMvc();

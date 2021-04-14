@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FeedApi.Models;
+using Feed.Service;
 
 namespace FeedApi.Controllers
 {
@@ -10,9 +11,9 @@ namespace FeedApi.Controllers
     {
         // GET: api/Feed
         [HttpGet]
-        public async Task<ActionResult<FeedDTO>> GetFeed(string tags)
+        public async Task<FeedDTO> GetFeed([FromServices] FeedService feedService, string tags)
         {
-            return await Feed.Service.PostsService.GetFeed(tags);
+            return await feedService.GetFeed(tags);
         }
     }
 }

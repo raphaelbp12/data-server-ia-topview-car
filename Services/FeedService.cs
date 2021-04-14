@@ -1,26 +1,34 @@
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using FeedApi.Models;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Feed.Service
 {
-    public static class PostsService
+    public class FeedService
     {
-        public static async Task<FeedDTO> GetFeed(string tags = "")
+        private readonly IHttpClientFactory _clientFactory;
+        public FeedService(IHttpClientFactory clientFactory)
         {
-            FeedDTO feed = new FeedDTO();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("https://www.flickr.com/services/feeds/photos_public.gne?format=json&tags="+tags))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    string pureJson = Regex.Replace(apiResponse, @"^.+?\(|\)$", "");
-                    feed = JsonConvert.DeserializeObject<FeedDTO>(pureJson);
-                }
-            }
-            return feed;
+            _clientFactory = clientFactory;
+        }
+        public async Task<FeedDTO> GetFeed(string tags = "")
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+            "https://www.flickr.com/services/feeds/photos_public.gne?format=json&tags="+tags);
+
+            var client = _clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            response.EnsureSuccessStatusCode();
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            string pureJson = Regex.Replace(apiResponse, @"^.+?\(|\)$", "");
+            return JsonConvert.DeserializeObject<FeedDTO>(pureJson);
         }
     }
 }
