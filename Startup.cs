@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using TodoApi.Models;
 
 namespace dotnet_core_flicker_project_server
 {
@@ -20,8 +19,6 @@ namespace dotnet_core_flicker_project_server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TodoContext>(opt =>
-                                               opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
 
             services.AddMvc();
