@@ -10,6 +10,8 @@ namespace dotnet_core_flicker_project_server
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,6 +21,17 @@ namespace dotnet_core_flicker_project_server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                builder =>
+                                {
+                                    builder.WithOrigins("http://localhost:3000")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                                });
+            });
+
             services.AddSingleton<FeedService>();
             services.AddHttpClient();
             services.AddControllers();
@@ -37,6 +50,8 @@ namespace dotnet_core_flicker_project_server
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
             app.UseRouting();
