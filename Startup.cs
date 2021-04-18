@@ -26,14 +26,13 @@ namespace dotnet_core_flicker_project_server
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                 builder =>
                                 {
-                                    builder.WithOrigins("http://localhost:3000")
+                                    builder.WithOrigins("*")
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
                                 });
             });
 
-            services.AddSingleton<FeedService>();
-            services.AddHttpClient();
+            services.AddHttpClient<FeedService>();
             services.AddControllers();
 
             services.AddMvc();
@@ -53,7 +52,6 @@ namespace dotnet_core_flicker_project_server
 
             app.UseCors(MyAllowSpecificOrigins);
 
-            app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthorization();

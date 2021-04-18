@@ -3,24 +3,17 @@ using FeedApi.Models;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using BaseClient;
 
 namespace Feed.Service
 {
-    public class FeedService
+    public class FeedService : FlickrBaseClient
     {
-        private readonly IHttpClientFactory _clientFactory;
-        public FeedService(IHttpClientFactory clientFactory)
-        {
-            _clientFactory = clientFactory;
-        }
+        public FeedService(HttpClient client) : base(client) { }
         public async Task<FeedDTO> GetFeed(string tags = "")
         {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-            "https://www.flickr.com/services/feeds/photos_public.gne?format=json&tags="+tags);
 
-            var client = _clientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
+            var response = await Client.GetAsync("/services/feeds/photos_public.gne?format=json&tags="+tags);
 
             response.EnsureSuccessStatusCode();
 
