@@ -54,8 +54,6 @@ namespace dotnet_core_flicker_project_server
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
