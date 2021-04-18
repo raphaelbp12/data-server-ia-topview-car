@@ -4,18 +4,18 @@ namespace FeedApi.Models
 {
     public class MediaDTO
     {
-        public string m { get; set; }
+        public string M { get; set; }
     }
     public class PostItemDTO
     {
-        public string title { get; set; }
-        public string link { get; set; }
-        public MediaDTO media { get; set; }
-        public DateTime date_taken { get; set; }
-        public string description { get; set; }
-        public DateTime published { get; set; }
-        public string author { get; set; }
-        public string author_id { get; set; }
-        public string tags { get; set; }
+        public string Title { get; set; }
+        public string Link { get; set; }
+        public MediaDTO Media { get; set; }
+        public DateTime DateTaken { get; set; }
+        public string Description { get; set; }
+        public DateTime Published { get; set; }
+        public string Author { get; set; }
+        public string AuthorId { get; set; }
+        public string Tags { get; set; }
     }
 }

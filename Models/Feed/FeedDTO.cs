@@ -5,11 +5,11 @@ namespace FeedApi.Models
 {
     public class FeedDTO
     {
-        public string title { get; set; }
-        public string link { get; set; }
-        public string description { get; set; }
-        public DateTime modified { get; set; }
-        public string generator { get; set; }
-        public List<PostItemDTO> items { get; set; }
+        public string Title { get; set; }
+        public string Link { get; set; }
+        public string Description { get; set; }
+        public DateTime Modified { get; set; }
+        public string Generator { get; set; }
+        public List<PostItemDTO> Items { get; set; }
     }
 }
