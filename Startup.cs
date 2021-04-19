@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Feed.Service;
+using IService;
 
 namespace dotnet_core_flicker_project_server
 {
@@ -33,6 +34,7 @@ namespace dotnet_core_flicker_project_server
             });
 
             services.AddHttpClient<FeedService>();
+            services.AddTransient<IFeedService, FeedService>();
             services.AddControllers();
 
             services.AddMvc();

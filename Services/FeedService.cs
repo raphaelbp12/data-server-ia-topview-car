@@ -4,15 +4,15 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using BaseClient;
+using IService;
 
 namespace Feed.Service
 {
-    public class FeedService : FlickrBaseClient
+    public class FeedService : FlickrBaseClient, IFeedService
     {
         public FeedService(HttpClient client) : base(client) { }
         public async Task<FeedDTO> GetFeed(string tags = "")
         {
-
             var response = await Client.GetAsync("/services/feeds/photos_public.gne?format=json&tags="+tags);
 
             response.EnsureSuccessStatusCode();
