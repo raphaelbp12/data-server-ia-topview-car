@@ -1,27 +1,23 @@
 using System.Threading.Tasks;
 using FeedApi.Models;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using BaseClient;
-using IService;
+using Services.IService;
 
-namespace Feed.Service
+namespace Services.FeedService
 {
-    public class FeedService : FlickrBaseClient, IFeedService
+    public class FeedService : IFeedService
     {
-        public FeedService(HttpClient client) : base(client) { }
+        private readonly IFlickrClient _flickrClient;
+        public FeedService(IFlickrClient flickrClient)
+        {
+            _flickrClient = flickrClient;
+        }
+
         public async Task<FeedDTO> GetFeed(string tags = "")
         {
-            var response = await Client.GetAsync("/services/feeds/photos_public.gne?format=json&tags="+tags);
+            var response = await _flickrClient.GetFeed("/services/feeds/photos_public.gne?format=json&tags=" + tags);
 
-            response.EnsureSuccessStatusCode();
-
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-            
-            string apiResponse = await response.Content.ReadAsStringAsync();
-            string pureJson = Regex.Replace(apiResponse, @"^.+?\(|\)$", "");
-            return JsonConvert.DeserializeObject<FeedDTO>(pureJson);
+            return response;
         }
     }
 }

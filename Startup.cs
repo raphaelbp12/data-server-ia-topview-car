@@ -4,21 +4,23 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Feed.Service;
-using IService;
+using Services.IService;
+using Services.FeedService;
+using BaseClient;
+using System;
 
 namespace dotnet_core_flicker_project_server
 {
     public class Startup
     {
+
+        public IConfiguration Configuration { get; }
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,7 +35,12 @@ namespace dotnet_core_flicker_project_server
                                 });
             });
 
-            services.AddHttpClient<FeedService>();
+
+            services.AddHttpClient<IFlickrClient, FlickrClient>(options =>
+            {
+                options.BaseAddress = new Uri("https://www.flickr.com");
+            });
+
             services.AddTransient<IFeedService, FeedService>();
             services.AddControllers();
 

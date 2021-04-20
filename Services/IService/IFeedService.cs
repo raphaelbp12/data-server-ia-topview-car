@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FeedApi.Models;
 
-namespace IService
+namespace Services.IService
 {
     public interface IFeedService
     {

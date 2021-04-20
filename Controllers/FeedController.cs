@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FeedApi.Models;
-using IService;
+using Services.IService;
 
 namespace FeedApi.Controllers
 {
