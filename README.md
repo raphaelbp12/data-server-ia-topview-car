@@ -11,9 +11,6 @@ This endpoint is responsible to serve the Flickr images filtered by the tags.
 ### Flickr Endpoint
 `https://www.flickr.com/services/feeds/photos_public.gne?format=json&tags=nature,space`
 
-# Future Work
-There are some features missing that were not implemented due the time available. It would be nice to have a Distributed Cache System implemented on Redis and also identify some points to improve the usage of the SOLID principles.
-
 # Swagger
 This tool is a powerful hanging fruit. It auto-generates an API documentation based on annotations and endpoint signatures. It is awesome, it is possible to access a frontend auto-generated to view the documentation.
 
@@ -25,3 +22,12 @@ Run these commands at the root project folder:
 `docker build --pull --rm -f "dockerfile" -t dotnetcoreflickerprojectserver:latest "."`
 ### running the image
 `docker run --rm -it  -p 4040:4040/tcp dotnetcoreflickerprojectserver:latest`
+
+
+# Future Work
+There are some features missing that were not implemented due the time available. It would be nice to have unit tests, a Distributed Cache System implemented on Redis and also identify some points to improve the usage of the SOLID principles.
+
+* **Config Files** - it is a must have to easily change the environments, an example would be the base URL and the ports.
+* **Unit Tests**
+* **Redis Cache System**
+* **SOLID improvements**
