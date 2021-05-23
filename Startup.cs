@@ -4,9 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Services.IService;
-using Services.FeedService;
-using BaseClient;
+using DatabaseModels;
+using Npgsql;
+using NpgsqlTypes;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace dotnet_core_flicker_project_server
@@ -24,6 +25,11 @@ namespace dotnet_core_flicker_project_server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = "User ID=postgres;Password=Postgres2019!;Host=localhost;Port=15432;Database=unity-cars-ml;Pooling=true;";
+            services.AddDbContext<CarContext>(options =>
+                options.UseNpgsql(connectionString)
+            );
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -35,13 +41,6 @@ namespace dotnet_core_flicker_project_server
                                 });
             });
 
-
-            services.AddHttpClient<IFlickrClient, FlickrClient>(options =>
-            {
-                options.BaseAddress = new Uri("https://www.flickr.com");
-            });
-
-            services.AddTransient<IFeedService, FeedService>();
             services.AddControllers();
 
             services.AddMvc();
