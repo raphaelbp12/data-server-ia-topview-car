@@ -83,13 +83,11 @@ namespace FeedApi.Controllers
                 }
             }
 
-            if (generationModel.Id != 0){
-                PopulationGenerationModel populationGenerationModel = new PopulationGenerationModel();
-                populationGenerationModel.Generation = generationModel;
-                populationGenerationModel.Population = _context.Populations.FirstOrDefault(x => x.Id == value.PopulationId);
-                _context.PopulationGenerations.Add(populationGenerationModel);
-                // _context.SaveChanges();
-            }
+            PopulationGenerationModel populationGenerationModel = new PopulationGenerationModel();
+            populationGenerationModel.Generation = generationModel;
+            populationGenerationModel.Population = _context.Populations.FirstOrDefault(x => x.Id == value.PopulationId);
+            _context.PopulationGenerations.Add(populationGenerationModel);
+
             _context.SaveChanges();
             return StatusCode(201, generationModel);
         }
