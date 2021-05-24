@@ -53,10 +53,7 @@ namespace dotnet_core_flicker_project_server
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseDeveloperExceptionPage();
 
             app.UseCors(MyAllowSpecificOrigins);
 
